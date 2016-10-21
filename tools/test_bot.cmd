@@ -1,0 +1,2 @@
+@echo off
+playgame.py --engine_seed 42 --player_seed 42 --food none --end_wait=0.25 --verbose --log_dir game_logs --turns 1500 --map_file maps/maze/maze_p04_38.map %1 "python submission_test/Testbot.py" "python submission_test/Testbot.py" "python submission_test/Testbot.py" "submission_test/MyBot.exe" -e --nolaunch --strict --capture_errors

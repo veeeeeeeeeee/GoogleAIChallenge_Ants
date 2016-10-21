@@ -1,0 +1,56 @@
+int r = state.rows;
+	int c = state.cols;
+	vector< vector<int> > m; // map for BFS
+	
+	// DIRECTIONS: row: 0, col: 1
+	// NESW: 0123
+	
+	// mark off obstacles
+	// -1=moveable, -2=nah
+	for (int i=0; i<r; i++) {
+		m.push_back(vector<int>());
+		for (int j=0; j<c; j++) {
+			m[i].push_back(-1);
+			Square tmp = state.grid[i][j];
+			if (tmp.isWater || tmp.ant != -1)
+				m[i][j] = -2;
+		}
+	}
+	for (int i=0; i<(int)state.myHills.size(); i++) {
+		Location tmp = state.myHills[i];
+		m[tmp.row][tmp.col] = -2;
+	}
+	m[src.row][src.col] = 1;
+	
+	bool loop = true;
+	queue<Location> q; q.push(src);
+	
+	while (loop && !q.empty()) {
+		Location c = q.front(); q.pop();
+		for (int i=0; i<4; i++) {
+			Location next = state.getLocation(c, i);
+			if (m[next.row][next.col] == -1) { // legal to move in
+				m[next.row][next.col] = m[c.row][c.col] + 1;
+				q.push(next);
+			}
+			if (next == dst) {
+				loop = false;
+				break;
+			}
+		}
+	}
+	
+	vector<int> p;
+	if (loop == false) { // only trace if reached dst
+		trace(p, m, src, dst);
+	
+		int top = p.back();
+		if (isMove(src, top)) {
+			assigna[src] = dst;
+			if (sf == 0)
+				assigns[dst] = src;
+			else assignf[dst] = src;
+		}
+		return true;
+	}
+	else return false; // if can't reach, use the normal move

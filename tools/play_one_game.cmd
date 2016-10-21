@@ -1,0 +1,2 @@
+@echo off
+python "%~dp0playgame.py" --engine_seed 42 --player_seed 42 --end_wait=0.25 --verbose --log_dir game_logs --turns 50 --map_file "%~dp0maps\maze\maze_p04_38.map" %* "python ""%~dp0sample_bots\python\GreedyBot.py""" "myBot\MyBot.exe" "submission_test\MyBot.exe" "myBot\MyBot.exe"
